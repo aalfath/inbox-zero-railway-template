@@ -22,9 +22,9 @@ Generated or wired by the template: `AUTH_SECRET`, `EMAIL_ENCRYPT_SECRET`, `EMAI
 You fill in at deploy time:
 
 - `AUTH_ALLOWED_EMAILS`: the email addresses allowed to sign up (comma-separated). Everyone else is refused.
-- `DEFAULT_LLM_PROVIDER` (default `anthropic`) and `LLM_API_KEY`: your AI provider and its API key.
+- `LLM_API_KEY`: the API key for `DEFAULT_LLM_PROVIDER` (default `anthropic`; also `openai`, `google`, `openrouter`, `groq` and others). Optional: `DEFAULT_LLM_MODEL`.
 
-Set after the first deploy, once you know the service's domain (the app boots without them):
+Optional, set after the first deploy once you know the service's domain (the app boots without them, using upstream's `skipped` placeholder for Google):
 
 - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `GOOGLE_PUBSUB_TOPIC_NAME` for Gmail ([upstream guide](https://docs.getinboxzero.com/hosting/google-oauth)).
 - `MICROSOFT_CLIENT_ID`, `MICROSOFT_CLIENT_SECRET` (and `MICROSOFT_TENANT_ID`) for Outlook ([upstream guide](https://docs.getinboxzero.com/hosting/microsoft-oauth)).
