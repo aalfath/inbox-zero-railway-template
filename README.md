@@ -8,7 +8,7 @@ One-click Railway template for [Inbox Zero](https://github.com/elie222/inbox-zer
 |---|---|---|
 | **Inbox Zero** | `web/` (`ghcr.io/elie222/inbox-zero:2.30.0`, pinned by digest) | Next.js web app and API on the public domain. Runs the database migrations on start, retrying until Postgres is ready. |
 | **Worker** | `worker/` (same image) | BullMQ worker: pulls background jobs (automation, digests, summaries) from Redis and forwards them to the web app over the private network. |
-| **Cron** | `cron/` (`alpine:3.24.4` + curl) | Calls the app's scheduled-job endpoints: scheduled actions, automation jobs, follow-ups, digests, meeting briefs, Gmail/Outlook watch renewal, daily retention. |
+| **Cron** | `cron/` (`alpine:3.24.4`, busybox wget) | Calls the app's scheduled-job endpoints: scheduled actions, automation jobs, follow-ups, digests, meeting briefs, Gmail/Outlook watch renewal, daily retention. |
 | **Redis HTTP** | `redis-http/` (`hiett/serverless-redis-http:0.0.10`) | Upstash-compatible REST proxy in front of Redis, as in upstream's `docker-compose.yml`. |
 | **Postgres** | Railway Postgres | Users, accounts, rules, history, encrypted OAuth tokens. Volume. |
 | **Redis** | Railway Redis | Cache, rate limits, BullMQ queues and live updates. Volume. |

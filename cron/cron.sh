@@ -8,15 +8,17 @@ set -u
 URL="${INBOX_ZERO_URL%/}"
 
 echo "[cron] waiting for Inbox Zero at $URL"
-until curl -fs -o /dev/null "$URL/api/health"; do sleep 5; done
+until wget -q -T 10 -O /dev/null "$URL/api/health" 2>/dev/null; do sleep 5; done
 echo "[cron] Inbox Zero is up, starting job loops"
 
 job() { # <path> <interval seconds> [initial delay seconds]
   sleep "${3:-0}"
   while true; do
-    code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 600 \
-      -H "Authorization: Bearer $CRON_SECRET" "$URL$1") || code=000
-    echo "[cron] $1 -> $code"
+    if wget -q -T 600 -O /dev/null --header "Authorization: Bearer $CRON_SECRET" "$URL$1" 2>/dev/null; then
+      echo "[cron] $1 ok"
+    else
+      echo "[cron] $1 failed"
+    fi
     sleep "$2"
   done
 }
